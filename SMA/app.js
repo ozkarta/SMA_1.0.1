@@ -12,7 +12,7 @@ var app = express();
 
 //_______________REQUIRES__________________
 var config=require('./config/server')();
-var session=var session=require('express-session');
+var session=require('express-session');
 var expressLayouts=require('express-ejs-layouts');
 var expressPartials=require('express-partials');
 var fs=require('fs');
@@ -24,10 +24,16 @@ var passport=require('passport');
 var flash=require('connect-flash');
 //-------------------CUSTOM-----------------
 var defaultRouting=require('./routes/defaultRouting');
-var dbConnector=require('./models/dbConnector');
-var smaConfigParser=require('./smaConfigParser');
-var smaLocals=require('./smaLocals');
+var db=require('./models/dbConnector.js');
+var dbConnector=new db.dbConnector(sql);
+var smaConfigParser=require('./models/smaConfigParser');
+var sma=require('./models/smaLocals.js');
 
+
+var smaLocals=new sma.smaLocals(dbConnector)
+var configReader=new smaConfigParser.configReader(sma,app,smaLocals,fs,dbConnector,xmlObject,utf8);
+var registerRoutings=new defaultRouting.registerRoutings(sma,smaLocals,passport);
+var configReader=new smaConfigParser.configReader(sma,app,smaLocals,fs,dbConnector,xmlObject,utf8);
 
 //__________________________________________
 
@@ -95,8 +101,31 @@ app.use(function(err, req, res, next) {
 app.listen(config.port, function(){
     console.log('Express server listening on port ' + config.port);
 });
+//_________________________________________________________________
+function main(){
+  console.dir(sma)
+  configReader.parseConfig(function(){
+    registerRoutings.register(app,smaLocals,function(){
+      setLayout(smaLocals.activeUser.layoutName);
+
+      //require('./server_scripts/authentication.js')(passport,sma,smaLocals);
+    });
+  });
+
+  
+  
+};
+
+
+function setLayout(layoutName){
+  app.set('layout','layouts/'+layoutName);
+}
+
+main();
 
 
 
+
+//_________________________________________________________________
 console.log('______server was compiled succesfully_______')
 //module.exports = app;

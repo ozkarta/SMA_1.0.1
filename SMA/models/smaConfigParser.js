@@ -11,7 +11,7 @@ var   configReader=function(sma,app,smaLocals,fs,dbConnector,xmlObject,utf8){
     //----------------------------------------------------------------------------------
 	configReader.prototype.parseConfig=function (callback){
 	//var data=fs.readFileSync('./configurations/SMAconfig.0.01.XML','utf8');
-	var data=fs.readFileSync('./configurations/SMAconfig.0.02.XML','utf8');
+	var data=fs.readFileSync('./config/application/SMAconfig.0.02.XML','utf8');
 	
 	var parser=new xmlObject.Parser();
 	parser.parseString(data,function(err,result){
