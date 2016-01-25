@@ -116,7 +116,7 @@
 
 		var getIndex=function(req,res){
 						//console.dir(req)
-						console.dir('___query  aris    ____   '+req.query.queryGParam);
+						//console.dir('___query  aris    ____   '+req.query.queryGParam);
 						//console.log('default page was requested  by GET')
 						//smaLocals.setActivePage(req.originalUrl);
 						smaLocals.setActivePage(req.path);
@@ -135,7 +135,7 @@
 									smaLocals.dataSet=undefined;			
 									//res.render(smaLocals.activeUser.userType+req.originalUrl,smaLocals.locals(),function(err,html){
 									smaLocals.setActivePage(req.path);	
-									console.dir(smaLocals.activePage)
+									//console.dir(smaLocals.activePage)
 
 									if(req.query.queryGParam!==undefined){
 										smaLocals.initializeDataSetFromRequestedQueryGUID(req.query.queryGParam,function(dataset){

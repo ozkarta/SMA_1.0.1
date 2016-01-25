@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<%  
 
+console.log('   layout is .......>  there  ')
+
+%>
 <head>
 
     <meta charset="utf-8">
@@ -9,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><%= activePage.pageTitle%></title>
+    <title><%= locals.activePage.pageTitle%></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -43,13 +47,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">
-                    <img src="images/<%= logoName %>" alt="" >
+                    <img src="images/<%= locals.logoName %>" alt="" >
                 </a>
             </div>
             
              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                   <% menuItems.forEach(function(menu){ %>
+                   <% locals.menuItems.forEach(function(menu){ %>
                         <li>
                             <a href="/<%= menu.viewName %>"><%= menu.screenName %></a>
                         </li>
@@ -61,7 +65,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style=" position:absolute;right:15% ;top:0%">
                             <ul class="nav navbar-nav">
-                               <% additionalMenuItems.forEach(function(menu){ %>
+                               <% locals.additionalMenuItems.forEach(function(menu){ %>
                                     <li>
                                         <a href="/<%= menu.viewName %>"><%= menu.screenName %></a>
                                     </li>
@@ -74,8 +78,8 @@
                       
                       <select class="selectpicker" style=" position:absolute;right:5% ;top:30%" onchange="languageChooserSelectionChanged(this)">
                     
-                              <% console.dir(languageItems+'  __'+currentLanguage);   languageItems.forEach(function(item){  console.log('ozzz_- '+item.languageName)
-                                 if(item.languageSystemName==currentLanguage) {  %>
+                              <% console.dir(locals.languageItems+'  __'+locals.currentLanguage);   locals.languageItems.forEach(function(item){  console.log('ozzz_- '+item.languageName)
+                                 if(item.languageSystemName==locals.currentLanguage) {  %>
 
                                         <option selected="true"><a href="#"><%= item.languageName %></a></option>
 
@@ -84,7 +88,7 @@
                                         <option><a href="#"><%= item.languageName %></a></option>
                             <%      }
                               
-                               });  console.log('gadaecemaaa '+currentLanguage) %>
+                               });  console.log('gadaecemaaa '+locals.currentLanguage) %>
                     
                    
                         </select>
@@ -95,7 +99,7 @@
     </nav>
  
 
- <%  if(leftPanel!==undefined){ %>
+ <%  if(locals.leftPanel!==undefined){ %>
     <div id="wrapper" style=" position:absolute;left:0% ;top:10%;width:100%">
         <!--checks  if sidebar  is defined  and shows  only  if yes-->
         
@@ -111,9 +115,9 @@
                         <a href="#">Dashboard</a>
                     </li-->
                    
-                    <%  activePage.panelItems.forEach(function(item){ %>
+                    <%  locals.activePage.panelItems.forEach(function(item){ %>
                         <li>
-                            <a href="/<%= activePage.viewName+'?queryGParam='+item.itemActionQueryGUID %>"><%=item.itemName %></a>
+                            <a href="/<%= locals.activePage.viewName+'?queryGParam='+item.itemActionQueryGUID %>"><%=item.itemName %></a>
                         </li>
                     <% }); %>
                 </ul>

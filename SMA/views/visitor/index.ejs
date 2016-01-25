@@ -2,11 +2,12 @@
  <br/>
  <div class="container" style="width:95%">
 <%  
-    if(dataset!==undefined){
+
+    if(locals.dataset!=undefined){
 
 
 
-        dataset.forEach(function(item){
+        locals.dataset.forEach(function(item){
 %>
 <div class="row" >
 
@@ -39,7 +40,7 @@
 
 <%
         });
-    }
+    }   
 %>
 </div>
  <div class="container" style="width:95%">
