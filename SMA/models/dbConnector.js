@@ -162,28 +162,14 @@ var dbConnector=function(sql){
 		var connection=new this.sql.Connection(this.connectionJson,function(error){
 			var request=new sql.Request(connection);
 			request.query(query,function(error,recordsets){
-				//console.log('___guid____request')
-				/*console.dir(recordsets[0].guid.toString());
-				if(recordsets!= undefined){
-					if(recordsets[0]!=undefined){
-						if(recordsets[0].guid!=undefined){
-							//console.log(recordsets[0][0].value);
-							callback(recordsets[0].guid.toString());
-						}else{
-							callback(undefined);
-						}
-					}else{
-						callback(undefined);
-					}
-				}else{
-						callback(undefined);
-					}
-					*/
-				//console.log('recortset  is ---------')
-				//console.dir(recordsets);
+				
 				callback(recordsets);
 			});
 		});
+	}
+
+	dbConnector.prototype.signUp=function(email,password,callback){
+		callback('client');
 	}
 };
 

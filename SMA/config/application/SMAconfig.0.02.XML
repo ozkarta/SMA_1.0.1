@@ -37,7 +37,7 @@
 						</screen_page>
 						<default_list_dataset>
 							<data_query>
-											<![CDATA[--  data query  to be executed   on  Home  press 1
+											<![CDATA[--  Default Data Query
 
 												--  select * from Products
 												--select * from product
@@ -111,7 +111,7 @@
 						</screen_page>
 						<default_list_dataset>
 							<data_query>
-											<![CDATA[--  data query  to be executed   on  Home  press 1
+											<![CDATA[--  data query  to be executed   on  about MENU 1
 
 
 											]]>
@@ -121,7 +121,7 @@
 							<panel_item>
 								<screen_name>item 1 for about</screen_name>
 								<data_query>
-									<![CDATA[--  data query  to be executed   on  About  press 1
+									<![CDATA[--  data query  to be executed   on  about MENU 1
 
 										--  select * from Products
 									]]>
@@ -130,7 +130,7 @@
 							<panel_item>
 								<screen_name>item 2 for about</screen_name>
 								<data_query>
-									<![CDATA[--  data query  to be executed   on  About  press 2
+									<![CDATA[--  data query  to be executed   on  about MENU 2
 
 										--  select * from Products
 									]]>
@@ -139,7 +139,7 @@
 							<panel_item>
 								<screen_name>item 3 for about</screen_name>
 								<data_query>
-									<![CDATA[--  data query  to be executed   on  About  press 3
+									<![CDATA[--  data query  to be executed   about MENU 3
 
 										--  select * from Products
 									]]>

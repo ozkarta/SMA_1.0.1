@@ -9,6 +9,10 @@ var smaLocals=function(db){
 	this.default_footer_name;
 	this.logoImageName;
 
+
+	this.userPool=[];
+
+
 	this.languageItems=[];
 	this.selectedLanguage='georgian';
 
@@ -22,6 +26,17 @@ var smaLocals=function(db){
     this.userInSession;
     this.actionQueries=[];
     this.dataSet=undefined;
+
+    smaLocals.prototype.getUserFromPool=function(userGUID,userSessionGUID,callback){
+    	for (var i in this.userPool){
+    		if(this.userPool[i].userGUID==userGUID & this.userPool[i].userSessionGUID==userSessionGUID){
+    			callback(this.userPool[i]);
+    		}
+    	}
+    	 callback(null);
+    }
+
+
 	smaLocals.prototype.setActivePage=function(viewName){
 		console.log('Setting active page')
 		
@@ -240,6 +255,19 @@ var panelItem=function(itemName,itemActionQueryGUID){
 var queryObject=function(guid,query){
 	this.guid=guid;
 	this.query=query;
+}
+var userPoolObject=function(){
+	this.userGUID='';
+	this.userSessionGUID='';   //  GUID  which is generated  when signing in
+
+
+	this.selectedLanguage='georgian';
+	this.activeUser;   //  identifies current  user  level
+	this.smaUsers=[];  // defines all user levels
+	this.activePage;     //  active page  
+    this.userInSession;
+    this.actionQueries=[];  // array of  querys  to be used  
+    this.dataSet=undefined;   //  dataset  generated  for the user
 }
 //_________________________________________________________________________________________________________________
 

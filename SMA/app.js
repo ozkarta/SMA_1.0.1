@@ -35,11 +35,15 @@ var configReader=new smaConfigParser.configReader(sma,app,smaLocals,fs,dbConnect
 var registerRoutings=new defaultRouting.registerRoutings(sma,smaLocals,passport);
 
 
-//__________________________________________
+//__________________V2________________________
 
+var smaConfigParserV2=require('./models/smaConfigParserV2.JS');
+var usersObject=require('./models/usersObject.JS');
+var defaultRoutingV2=require('./routes/defaultRoutingV2.JS');
 
-
-
+var users=new usersObject.users();
+var configReaderV2=new smaConfigParserV2.configReader(usersObject,users,dbConnector);
+var registerRoutingsV2=new defaultRoutingV2.registerRoutings(app,usersObject,users,dbConnector)
 
 
 
@@ -53,6 +57,7 @@ var registerRoutings=new defaultRouting.registerRoutings(sma,smaLocals,passport)
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(expressPartials())
+app.use(session({secret:'ozkart'}))
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -119,17 +124,36 @@ function main(){
   
 };
 
+function mainV2(){
+  configReaderV2.parseConfig(function(){
+    console.log('config Parsing is complete!!!')
+    registerRoutingsV2.register(app,usersObject,users,dbConnector,function(){
+        console.log('routings registration was complete !!!');
+        //console.log(users.default_layout_name);
+        setLayoutV2(users.default_layout_name);
+    });
+  });
+
+  
+};
+
 
 function setLayout(layoutName){
   app.set('layout','layouts/'+layoutName);
   console.log('this was layout ------>'+layoutName)
 }
+function setLayoutV2(layoutName){
+  app.set('layout','layouts/'+layoutName);
+  console.log('this was layout ------>'+layoutName)
+}
 
-main();
+mainV2(function(){
+  console.log('______server was compiled succesfully_______')
+});
 
 
 
 
 //_________________________________________________________________
-console.log('______server was compiled succesfully_______')
+
 //module.exports = app;
