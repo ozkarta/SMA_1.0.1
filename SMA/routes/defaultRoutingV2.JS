@@ -1,4 +1,4 @@
-	
+
 	var registerRoutings=function(app,usersObject,users,dbConnector){
 
 
@@ -24,15 +24,34 @@
 					//console.log(levelGUID);
 					//console.log('the  language GUID is '+users.getSelectedLanguageGUID(users.DefaultSelectedLanguage));
 					users.getSelectedLanguageGUID(users.DefaultSelectedLanguage,function(languageGUID){
-							dbConnector.signUp(languageGUID,levelGUID,req.body.email,'1',req.body.password,'','','1',0,'','','','',function(userType){
-								users.getUserLevelWithUserType(userType,function(userLevel){
+							dbConnector.signUp(languageGUID,levelGUID,req.body.email,'1',req.body.password,'','','1',0,'','','','',function(recordset){
+								/*users.getUserLevelWithUserType(userType,function(userLevel){
 									dbConnector.newguid(function(sessionGUID){
 											currentSession.sessionGUID=sessionGUID;
 											users.userPool.push(new usersObject.userPoolObject(sessionGUID,'',userLevel,userLevel.defaultPage))
 											res.redirect('/');
 									});
-									
-								});
+									*/
+									console.dir(recordset);
+											if(recordset.levelName!==undefined){
+													users.getUserLevelWithUserType(recordset.levelName,function(userLevel){
+														dbConnector.newguid(function(sessionGUID){
+																currentSession.sessionGUID=sessionGUID;
+																users.userPool.push(new usersObject.userPoolObject(sessionGUID,'',userLevel,userLevel.defaultPage))
+																res.redirect('/');
+													});
+												});
+											}else{
+												if(recordset.signUpError!==undefined){
+													users.findUserWithSessionGUID(currentSession.sessionGUID,function(currentUser){
+														currentUser.SignUpWarningText=recordset.signUpError.toString();
+														res.redirect('/register.ejs');
+													});
+												}
+											}
+
+
+							
 							
 							});
 				

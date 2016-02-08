@@ -199,14 +199,14 @@ values  ------------------------------------------
 		--------------------------------------------------------
 
 
-/*
+
 declare @counter as integer
 set @counter=1
 insert into accessLevels(levelGUID,levelName,[level])
-	values(newid(),'VISITOR',@counter)
+	values(newid(),'visitor',@counter)
 	set @counter=@counter+1
 insert into accessLevels(levelGUID,levelName,[level])
-	values(newid(),'CLIENT',@counter)
+	values(newid(),'client',@counter)
 	set @counter=@counter+1
 insert into accessLevels(levelGUID,levelName,[level])
 	values(newid(),'COMPANYWORKER',@counter)
@@ -223,7 +223,7 @@ insert into accessLevels(levelGUID,levelName,[level])
 insert into accessLevels(levelGUID,levelName,[level])
 	values(newid(),'SMAMANAGER',@counter)
 	set @counter=@counter+1
-*/
+
 
 
 
@@ -254,6 +254,11 @@ declare @n1 varchar(50)=newid()
 declare @n2 varchar(50)=newid()
 declare @n3 varchar(50)=newid()
 
+declare @m1 varchar(50)=newid()
+declare @m2 varchar(50)=newid()
+declare @m3 varchar(50)=newid()
+
+
 insert into productCategory
 SELECT @n1 as [categoryGUID]
       ,'IntakeSystems' as [categoryName]
@@ -266,7 +271,7 @@ SELECT @n3 as [categoryGUID]
 
 insert into  product
 	SELECT @en as [languageGUID]
-		  ,newid() as [productGUID]
+		  ,@m1 as [productGUID]
 		  ,getdate() as [effDate]
 		  ,0 as [SequenceNum]
 		  ,@n1 as [productCategoryGUID]
@@ -283,7 +288,7 @@ insert into  product
 		  ,55 as [sellingPriceCeiling]
 UNION
 	SELECT @en as [languageGUID]
-		  ,newid() as [productGUID]
+		  ,@m2 as [productGUID]
 		  ,getdate() as [effDate]
 		  ,0 as [SequenceNum]
 		  ,@n2 as [productCategoryGUID]
@@ -300,7 +305,7 @@ UNION
 		  ,33 as [sellingPriceCeiling]
 UNION
 		SELECT @en as [languageGUID]
-		  ,newid() as [productGUID]
+		  ,@m3 as [productGUID]
 		  ,getdate() as [effDate]
 		  ,0 as [SequenceNum]
 		  ,@n3[productCategoryGUID]
@@ -318,23 +323,21 @@ UNION
 
 
 
-select * from product
-
 insert into productMediaFileInformation
 select 
-	@n1		as ProductGUID,
+	@m1		as ProductGUID,
 	newid() as MediaGUID,
 	'ListImage' as MediaType,
-	'resources/images/hkssuperpowerflow-ak005-cropcopy.jpeg' as MediaLocationURI
+	'resources/images/hkssuperpowerflow-ak005-cropcopy.jpg' as MediaLocationURI
 UNION
 select 
-	@n2		as ProductGUID,
+	@m2		as ProductGUID,
 	newid() as MediaGUID,
 	'ListImage' as MediaType,
-	'resources/images/hkssuperpowerflow-ak005-cropcopy.jpeg' as MediaLocationURI
+	'resources/images/71QIT1vyMmL._SX522_.jpg' as MediaLocationURI
 UNION
 select 
-	@n3		as ProductGUID,
+	@m3		as ProductGUID,
 	newid() as MediaGUID,
 	'ListImage' as MediaType,
-	'resources/images/mh40rNm60BH2_aR5SvQ4M1Q.jpeg' as MediaLocationURI
+	'resources/images/mh40rNm60BH2_aR5SvQ4M1Q.jpg' as MediaLocationURI

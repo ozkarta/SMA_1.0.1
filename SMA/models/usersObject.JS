@@ -78,7 +78,7 @@ var userPoolObject=function(sessionGUID,userGUID,activeUserLevel,activePage){
 	this.activeUserLevel=activeUserLevel;   //  identifies current  user  level
 	this.activePage=activePage;     //  active page  
     this.dataSet=undefined;   //  dataset  generated  for the user
-
+    this.SignUpWarningText='';
 
     userPoolObject.prototype.setActivePage=function(viewName){
 		console.log('Setting active page')
@@ -130,7 +130,8 @@ var userPoolObject=function(sessionGUID,userGUID,activeUserLevel,activePage){
 					'languageItems': this.activeUserLevel.languageItems,
 					'currentLanguage':this.activeUserLevel.selectedLanguage,
 					'activePage':this.activePage,
-					'dataset':this.dataSet
+					'dataset':this.dataSet,
+					'signUpWarning':this.SignUpWarningText
 					}
 				}
 		return  toReturn;

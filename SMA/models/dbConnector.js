@@ -188,14 +188,14 @@ var dbConnector=function(sql){
 
 			request.execute('registerUser',function(err,recordsets,returnValue){
 
-
+				console.log('error is ----')
 				console.dir(err);
-				console.dir(returnValue);
-				if(recordsets!= undefined){
-					if(recordsets[0]!=undefined){
-						if(recordsets[0][0]!=undefined){
-							console.log(recordsets[0][0].value);
-							callback(recordsets[0][0].LevelName.toString());
+				console.log('calue is -----')
+				console.dir(recordsets[0][0]);
+				if(recordsets!== undefined){
+					if(recordsets[0]!==undefined){
+						if(recordsets[0][0]!==undefined){
+							callback(recordsets[0][0]);
 						}else{
 							callback(undefined);
 						}

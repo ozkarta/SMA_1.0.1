@@ -219,22 +219,34 @@ create procedure  registerUser
 
 as 
 begin
-	insert into UsersGeneral
-		select	@languageGUID	        as LanguageGUID,
-				@LevelGUID		        as LevelGUID,
-				newid()			        as userGUID,
-				getdate()		        as effDate,
-				@email		   	        as email,
-				@emailConfirmed	        as emailConfirmed,
-				@passwordHash           as PasswordHash,
-				@salt			        as salt,
-				@phoneNumber            as phoneNumber,
-				@phoneNumberConfirmed   as phoneNumberConfirmed,
-				0						as accessFailedCount,
-				@userName				as userName,
-				@firstName				as FirstName,
-				@lastName				as LastName,
-				@passportID				as passportID,
-				getdate()				as registerDate			
+	declare @newUserGUID as varchar(50)=newid()
+	IF NOT EXISTS(select * from usersGeneral where email=@email)
+	begin
+		insert into UsersGeneral
+			select	@languageGUID	        as LanguageGUID,
+					@LevelGUID		        as LevelGUID,
+					@newUserGUID			as userGUID,
+					getdate()		        as effDate,
+					@email		   	        as email,
+					@emailConfirmed	        as emailConfirmed,
+					@passwordHash           as PasswordHash,
+					@salt			        as salt,
+					@phoneNumber            as phoneNumber,
+					@phoneNumberConfirmed   as phoneNumberConfirmed,
+					0						as accessFailedCount,
+					@userName				as userName,
+					@firstName				as FirstName,
+					@lastName				as LastName,
+					@passportID				as passportID,
+					getdate()				as registerDate	
+
+			select levelName as levelName from accessLevels where levelGUID=(select levelGUID from usersGeneral where userGUID=@newUserGUID)
+	end
+	else
+	begin
+		select '*email  exists*' as signUpError	
+	end
+		
+	
 end
 
