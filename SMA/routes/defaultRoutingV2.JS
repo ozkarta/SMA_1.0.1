@@ -46,6 +46,7 @@
 													users.findUserWithSessionGUID(currentSession.sessionGUID,function(currentUser){
 														currentUser.SignUpWarningText=recordset.signUpError.toString();
 														res.redirect('/register.ejs');
+
 													});
 												}
 											}
@@ -115,13 +116,15 @@
  
 		//__________________________________GET________________________________________________________
 		
-		var trialGetAll =function(req,res){
+		var trialGetAll =function(req,res,viewMan){
 			var currentSession=req.session;
 
 			initSessionAndUser(currentSession,function(currentUser){
 				currentUser.dataset=undefined;
 				currentUser.setActivePage(req.path);
-
+				if(req.path!=='/register.ejs'){
+					currentUser.SignUpWarningText='';
+				}
 				if(req.query.queryGParam!==undefined){
 										currentUser.initializeDataSetFromRequestedQueryGUID(req.query.queryGParam,function(dataset){
 												currentUser.dataSet=dataset;
