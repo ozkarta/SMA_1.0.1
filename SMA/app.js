@@ -57,7 +57,7 @@ var registerRoutingsV2=new defaultRoutingV2.registerRoutings(app,usersObject,use
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(expressPartials())
-app.use(session({secret:'ozkart'}))
+app.use(session({secret:'ozkart',cookie:{maxAge:600000}}))  //  600 seconds  remaining from   first creation
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

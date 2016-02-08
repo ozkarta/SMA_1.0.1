@@ -69,9 +69,9 @@ go
 CREATE TABLE [usersGeneral] 
 (
 	[LanguageGUID]					varchar(50) not null,						--  As  Default Language 
-	[effDate]						datetime default getdate(), 
 	[levelGUID]						varchar(50) not null,
 	[userGUID]                      VARCHAR (50)   NOT NULL default newid(),
+	[effDate]						datetime default getdate(), 
 	
 	---------------------Autorization
     

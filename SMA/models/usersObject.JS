@@ -48,12 +48,25 @@ var users=function(){
 	}
 
 	users.prototype.getUserLevelWithUserType=function(userType,callback){
-		console.dir(this.smaUserLevels);
 		this.smaUserLevels.forEach(function(userLevel){
 			if(userLevel.userType==userType){
 				callback(userLevel);
 			}
 		});
+	
+	}
+
+	users.prototype.getSelectedLanguageGUID=function(DefaultSelectedLanguage,callback){
+		this.languageItems.forEach(function(languageItem){
+			console.dir(languageItem);
+			console.log(' vs '+ DefaultSelectedLanguage);
+			if(languageItem.languageSystemName==DefaultSelectedLanguage){
+			console.log('calling back');				
+				callback(languageItem.languageGUID);
+			}
+		});
+
+		
 	}
 }
 var userPoolObject=function(sessionGUID,userGUID,activeUserLevel,activePage){

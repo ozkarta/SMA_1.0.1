@@ -20,10 +20,34 @@
 		function trialPost(app,usersObject,users,dbConnector){
 			app.post('/signup',function(req,res){
 				var currentSession=req.session;
-				dbConnector.signUp(req.body.email,req.body.password,function(userType){
+				dbConnector.getAccessLevelGUID('client',function(levelGUID){
+					//console.log(levelGUID);
+					//console.log('the  language GUID is '+users.getSelectedLanguageGUID(users.DefaultSelectedLanguage));
+					users.getSelectedLanguageGUID(users.DefaultSelectedLanguage,function(languageGUID){
+							dbConnector.signUp(languageGUID,levelGUID,req.body.email,'1',req.body.password,'','','1',0,'','','','',function(userType){
+								users.getUserLevelWithUserType(userType,function(userLevel){
+									dbConnector.newguid(function(sessionGUID){
+											currentSession.sessionGUID=sessionGUID;
+											users.userPool.push(new usersObject.userPoolObject(sessionGUID,'',userLevel,userLevel.defaultPage))
+											res.redirect('/');
+									});
+									
+								});
+							
+							});
+				
+					});
+					
+				})
+				//dbConnector.signUp(req.body.email,req.body.password,function(userType){
+					
+			});
+
+
+			app.post('/login',function(req,res){
+				var currentSession=req.session;
+				dbConnector.signIn(req.body.email,req.body.password,function(userType){
 					users.getUserLevelWithUserType(userType,function(userLevel){
-						console.dir(userLevel);
-						console.log('___________________________________________')
 						dbConnector.newguid(function(sessionGUID){
 								//console.log(guid);
 								currentSession.sessionGUID=sessionGUID;
@@ -34,7 +58,6 @@
 					});
 				
 				});
-				
 			});
 		}
 

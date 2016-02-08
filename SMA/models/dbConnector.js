@@ -168,9 +168,77 @@ var dbConnector=function(sql){
 		});
 	}
 
-	dbConnector.prototype.signUp=function(email,password,callback){
+	dbConnector.prototype.signUp=function(languageGUID,levelGUID,email,emailCinfirmed,passwordHash,salt,phoneNumber,phoneNumberConfirmed,accessFailedCount,userName,firstName,lastName,passportID,callback){
+		var connection=new this.sql.Connection(this.connectionJson,function(error){
+			var request=new sql.Request(connection);
+			request.input('languageGUID',sql.VarChar,languageGUID);
+			request.input('levelGUID',sql.VarChar,levelGUID);
+			request.input('email',sql.VarChar,email);
+			request.input('emailConfirmed',sql.VarChar,emailCinfirmed);
+			request.input('passwordHash',sql.VarChar,passwordHash);
+			request.input('salt',sql.VarChar,salt);
+			request.input('phoneNumber',sql.VarChar,phoneNumber);
+			request.input('phoneNumberConfirmed',sql.VarChar,phoneNumberConfirmed);
+			request.input('accessFailedCount',sql.Int,accessFailedCount);
+			request.input('userName',sql.VarChar,userName);
+			request.input('firstName',sql.VarChar,firstName);
+			request.input('lastName',sql.VarChar,lastName);
+			request.input('passportID',sql.VarChar,passportID);
+
+
+			request.execute('registerUser',function(err,recordsets,returnValue){
+
+
+				console.dir(err);
+				console.dir(returnValue);
+				if(recordsets!= undefined){
+					if(recordsets[0]!=undefined){
+						if(recordsets[0][0]!=undefined){
+							console.log(recordsets[0][0].value);
+							callback(recordsets[0][0].LevelName.toString());
+						}else{
+							callback(undefined);
+						}
+					}else{
+						callback(undefined);
+					}
+				}else{
+						callback(undefined);
+					}
+				
+			});
+		});
+
+
+
+
+		//callback('client');
+	}
+
+	dbConnector.prototype.signIn=function(email,passport,callback){
 		callback('client');
 	}
+
+	dbConnector.prototype.getAccessLevelGUID=function(levelName,callback){
+		var connection=new this.sql.Connection(this.connectionJson,function(error){
+			var request=new sql.Request(connection);
+			request.query('select levelGUID from accessLevels where levelName=\''+levelName+'\''.toString(),function(error,recordsets){
+				if(recordsets!= undefined){
+					if(recordsets[0]!=undefined){
+						if(recordsets[0].levelGUID!=undefined){
+							callback(recordsets[0].levelGUID.toString());
+						}else{
+							callback(undefined);
+						}
+					}else{
+						callback(undefined);
+					}
+				}else{
+						callback(undefined);
+					}
+			});
+		});
+	}	
 };
 
 

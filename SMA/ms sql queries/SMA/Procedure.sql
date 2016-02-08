@@ -201,3 +201,40 @@ end
 
 go
 --___________________________________________________________________________________
+
+create procedure  registerUser
+@languageGUID as varchar(50),
+@levelGUID    as varchar(50),
+@email as varchar(256),
+@emailConfirmed   varchar(1),
+@passwordHash as nvarchar(1000),
+@salt as varchar(max),
+@phoneNumber varchar(max),
+@phoneNumberConfirmed varchar(1),
+@accessFailedCount  int,
+@userName			nvarchar(256),
+@firstName			nvarchar(500),
+@lastName			nvarchar(1000),
+@passportID			nvarchar(20)
+
+as 
+begin
+	insert into UsersGeneral
+		select	@languageGUID	        as LanguageGUID,
+				@LevelGUID		        as LevelGUID,
+				newid()			        as userGUID,
+				getdate()		        as effDate,
+				@email		   	        as email,
+				@emailConfirmed	        as emailConfirmed,
+				@passwordHash           as PasswordHash,
+				@salt			        as salt,
+				@phoneNumber            as phoneNumber,
+				@phoneNumberConfirmed   as phoneNumberConfirmed,
+				0						as accessFailedCount,
+				@userName				as userName,
+				@firstName				as FirstName,
+				@lastName				as LastName,
+				@passportID				as passportID,
+				getdate()				as registerDate			
+end
+
