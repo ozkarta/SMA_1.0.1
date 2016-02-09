@@ -66,8 +66,8 @@
 
 			app.post('/login',function(req,res){
 				var currentSession=req.session;
-				dbConnector.signIn(req.body.email,req.body.password,function(userType){
-					users.getUserLevelWithUserType(userType,function(userLevel){
+				dbConnector.signIn(req.body.email,req.body.password,function(recordset){
+					/*users.getUserLevelWithUserType(userType,function(userLevel){
 						dbConnector.newguid(function(sessionGUID){
 								//console.log(guid);
 								currentSession.sessionGUID=sessionGUID;
@@ -76,7 +76,19 @@
 						});
 						
 					});
-				
+
+					*/
+					console.log('_____________this is the Recordset  when Logging In')
+					console.dir(recordset);
+					users.getUserLevelWithUserType(recordset.LevelName,function(userLevel){
+						dbConnector.newguid(function(sessionGUID){
+								//console.log(guid);
+								currentSession.sessionGUID=sessionGUID;
+								users.userPool.push(new usersObject.userPoolObject(sessionGUID,'',userLevel,userLevel.defaultPage))
+								res.redirect('/');
+						});
+						
+					});
 				});
 			});
 		}

@@ -215,8 +215,39 @@ var dbConnector=function(sql){
 		//callback('client');
 	}
 
-	dbConnector.prototype.signIn=function(email,passport,callback){
-		callback('client');
+	dbConnector.prototype.signIn=function(email,password,callback){
+		//callback('client');
+		var connection=new this.sql.Connection(this.connectionJson,function(error){
+			var request=new sql.Request(connection);
+			request.input('email',sql.VarChar,email);
+			request.input('passwordHash',sql.VarChar,password);
+			
+
+
+			request.execute('signIn',function(err,recordsets,returnValue){
+
+				console.log('error is ----')
+				console.dir(err);
+				console.log('calue is -----')
+				console.dir(recordsets[0][0]);
+				if(recordsets!== undefined){
+					if(recordsets[0]!==undefined){
+						if(recordsets[0][0]!==undefined){
+							callback(recordsets[0][0]);
+						}else{
+							callback(undefined);
+						}
+					}else{
+						callback(undefined);
+					}
+				}else{
+						callback(undefined);
+					}
+				
+			});
+		});
+
+
 	}
 
 	dbConnector.prototype.getAccessLevelGUID=function(levelName,callback){
